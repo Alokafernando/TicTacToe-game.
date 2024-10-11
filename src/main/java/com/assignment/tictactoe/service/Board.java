@@ -6,6 +6,6 @@ public interface Board {
    int[]  findNextAvailableSpot();
    boolean isLegalMove(int row, int col);
    void updateMove(int row, int col, Piece piece);
-    boolean checkWinner();
+    Piece checkWinner();
    void printBoard();
 }

@@ -22,8 +22,8 @@ public class Main {
                 AI.move();
                 System.out.println();
 
-                //check winner
-          
+
+
         }
 
     }
