@@ -9,22 +9,34 @@ public class Main {
 
         boolean isGameStarted = true;
 
-        while (isGameStarted) {
+      l1:  while (isGameStarted) {
             board.printBoard();
 
-                System.out.println();
-                //Human
-                System.out.println("Your turn (X): ");
+                System.out.println("\nYour turn (X): ");
                 human.move();
-                System.out.println();
-                //AI
-                System.out.println("Your turn (O): ");
+                //////////////////////////////////
+                System.out.println("\nAI's turn (O): ");
                 AI.move();
                 System.out.println();
 
 
+                if(board.checkWinner() == Piece.X){
+                    board.printBoard();
+                    System.out.println("Congratulations! You won!(X)");
+                    break l1;
+                }else if(board.checkWinner() == Piece.O){
+                    board.printBoard();
+                    System.out.println("Congratulations! You won!(O)");
+                    break l1;
+                }
+                if(board.isBoardFull() != true){
+                    isGameStarted = false;
+                    break l1;
+                }
+            }
 
-        }
+
+
 
     }
 }

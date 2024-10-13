@@ -18,6 +18,7 @@ public class HumanPlayer extends Player {
             row = scanner.nextInt();
             System.out.print("Column: ");
             column = scanner.nextInt();
+
         }while (board.isLegalMove(row, column));{
             board.updateMove(row, column, Piece.X);
         }

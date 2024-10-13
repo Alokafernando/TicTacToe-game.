@@ -1,100 +1,120 @@
 package com.assignment.tictactoe.service;
 
 public class BoardImpl implements Board {
-    private Piece[][] board;
-    private final int size = 3;
+    private Piece[][] pieces;
 
     public BoardImpl() {
-        board = new Piece[size][size];
+        pieces = new Piece[3][3];
         initializeBoard();
 
     }
 
     @Override
     public void initializeBoard() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                board[i][j] = Piece.EMPTY;
+        for (int row = 0; row < pieces.length; row++) {
+            for (int col = 0; col < pieces.length; col++) {
+                pieces[row][col] = Piece.EMPTY;
             }
         }
     }
 
     @Override
+    public boolean isLegalMove(int row, int col) {
+      return pieces[row][col] == Piece.X || pieces[row][col] == Piece.O;
+    }
+
+    @Override
+    public void updateMove(int row, int col, Piece piece) {
+        pieces[row][col] = piece;
+    }
+
+    @Override
+    public void printBoard() {
+        for (int row = 0; row < pieces.length; row++) {
+            for (int col = 0; col < pieces.length; col++) {
+                System.out.print(pieces[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Override
+    public Piece checkWinner() {
+        for (int row = 0; row < pieces.length; row++) {
+            if(pieces[row][0] == Piece.X){
+                if(pieces[row][0] == pieces[row][1] & pieces[row][1] == pieces[row][2]){
+                    return Piece.X;
+                }
+            }else if(pieces[row][0] == Piece.O){
+                if(pieces[row][0] == pieces[row][1] & pieces[row][1] == pieces[row][2]){
+                    return Piece.O;
+                }
+            }
+        }
+        for (int col = 0; col < pieces.length; col++) {
+            if(pieces[0][col] == Piece.X){
+                if(pieces[0][col] == pieces[1][col] & pieces[1][col] == pieces[2][col]){
+                    return Piece.X;
+                }
+            }else if(pieces[0][col] == Piece.O){
+                if(pieces[0][col] == pieces[1][col] & pieces[1][col] == pieces[2][col]){
+                    return Piece.O;
+                }
+            }
+        }
+        if(pieces[0][0] == Piece.X){
+            if (pieces[0][0] == pieces[1][1] & pieces[1][1] == pieces[2][2]) {
+                return Piece.X;
+            }
+        }else if(pieces[0][0] == Piece.O){
+            if (pieces[0][0] == pieces[1][1] & pieces[1][1] == pieces[2][2]) {
+                return Piece.O;
+            }
+        }
+        if(pieces[0][2] == Piece.X){
+            if (pieces[0][2] == pieces[1][1] & pieces[1][1] == pieces[2][0]) {
+                return Piece.X;
+            }
+        } else if (pieces[0][2] == Piece.O) {
+            if (pieces[0][2] == pieces[1][1] & pieces[1][1] == pieces[2][0]) {
+                return Piece.O;
+            }
+        }
+        return Piece.EMPTY;
+    }
+
+
+
     public int[] findNextAvailableSpot() {
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (board[i][j] == Piece.EMPTY) {
-                    return new int[]{i, j};
+        for (int row = 0; row < pieces.length; row++) {
+            for (int col = 0; col < pieces.length; col++) {
+                if (pieces[row][col] == Piece.EMPTY) {
+                    return new int[]{row, col};
                 }
             }
         }
         return null;
     }
 
-    @Override
-    public boolean isLegalMove(int row, int col) {
-        if (board[row][col] == Piece.X || board[row][col] == Piece.O) {
+    public boolean findWinner() {
+        if(checkWinner() == Piece.X || checkWinner() == Piece.O){
             return true;
         }else{
             return false;
         }
-      //  return board[row][col] == Piece.X || board[row][col] == Piece.O;
+
     }
 
-    @Override
-    public void updateMove(int row, int col, Piece piece) {
-        board[row][col] = piece;
-    }
-
-    @Override
-    public Piece checkWinner() {
-            
-            for (int row = 0; row < 3; row++) {
-                if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != Piece.EMPTY) {
-                    return board[row][0];
-                }
-            }
-
+    public boolean isBoardFull() {
+        for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if (board[0][col] == board[1][col] && board[1][col] == board[2][col] && board[0][col] != Piece.EMPTY) {
-                    return board[0][col];
-                }
-            }
-
-            if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != Piece.EMPTY) {
-                return board[0][0]; 
-            }
-
-            if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != Piece.EMPTY) {
-                return board[0][2];
-            }
-
-            if (isBoardFull()) {
-
-            }
-            return null;
-
-    }
-
-    private boolean isBoardFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == Piece.EMPTY) {
-                    return false; // if cell is empty send false
+                if (pieces[row][col] == Piece.EMPTY) {
+                    return false;
                 }
             }
         }
-        return true; // if all cell are filled send true
+        return true;
     }
 
-    @Override
-    public void printBoard() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 }
