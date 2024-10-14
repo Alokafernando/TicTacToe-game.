@@ -9,34 +9,40 @@ public class Main {
 
         boolean isGameStarted = true;
 
-      l1:  while (isGameStarted) {
+        l1: while (isGameStarted) {
             board.printBoard();
 
-                System.out.println("\nYour turn (X): ");
-                human.move();
-                //////////////////////////////////
-                System.out.println("\nAI's turn (O): ");
-                AI.move();
-                System.out.println();
+            System.out.println("\nYour turn (X): ");
+            human.move();
 
+            if (board.checkWinner() == Piece.X) {
+                board.printBoard();
+                System.out.println("Congratulations! You won! (X)");
+                break l1;
+            }
 
-                if(board.checkWinner() == Piece.X){
-                    board.printBoard();
-                    System.out.println("Congratulations! You won!(X)");
-                    break l1;
-                }else if(board.checkWinner() == Piece.O){
-                    board.printBoard();
-                    System.out.println("Congratulations! You won!(O)");
-                    break l1;
-                }
-                if(board.isBoardFull() != true){
-                    isGameStarted = false;
-                    break l1;
-                }
+            if (board.isBoardFull()) {
+                board.printBoard();
+                System.out.println("match tie");
+                break l1;
             }
 
 
+            System.out.println("\nAI's turn (O): ");
+            AI.move();
+            System.out.println();
 
+            if (board.checkWinner() == Piece.O) {
+                board.printBoard();
+                System.out.println("AI won! (O)");
+                break l1;
+            }
 
+            if (board.isBoardFull()) {
+                board.printBoard();
+                System.out.println("match tie");
+                break l1;
+            }
+        }
     }
 }

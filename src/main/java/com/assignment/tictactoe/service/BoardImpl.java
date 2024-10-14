@@ -20,7 +20,8 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isLegalMove(int row, int col) {
-      return pieces[row][col] == Piece.X || pieces[row][col] == Piece.O;
+      //  return pieces[row][col] == Piece.X || pieces[row][col] == Piece.O;  -> stack overFlow error
+      return pieces[row][col] == Piece.EMPTY;
     }
 
     @Override
@@ -84,8 +85,7 @@ public class BoardImpl implements Board {
     }
 
 
-
-    public int[] findNextAvailableSpot() {
+    /*public int[] findNextAvailableSpot() {
 
         for (int row = 0; row < pieces.length; row++) {
             for (int col = 0; col < pieces.length; col++) {
@@ -95,16 +95,52 @@ public class BoardImpl implements Board {
             }
         }
         return null;
-    }
+    }*/
 
-    public boolean findWinner() {
-        if(checkWinner() == Piece.X || checkWinner() == Piece.O){
-            return true;
-        }else{
-            return false;
+/*    public boolean findWinner() {
+        for (int row = 0; row < pieces.length; row++) {
+            if(pieces[row][0] == Piece.X){
+                if(pieces[row][0] == pieces[row][1] & pieces[row][1] == pieces[row][2]){
+                    return true;
+                }
+            }else if(pieces[row][0] == Piece.O){
+                if(pieces[row][0] == pieces[row][1] & pieces[row][1] == pieces[row][2]){
+                    return true;
+                }
+            }
         }
+        for (int col = 0; col < pieces.length; col++) {
+            if(pieces[0][col] == Piece.X){
+                if(pieces[0][col] == pieces[1][col] & pieces[1][col] == pieces[2][col]){
+                    return true;
+                }
+            }else if(pieces[0][col] == Piece.O){
+                if(pieces[0][col] == pieces[1][col] & pieces[1][col] == pieces[2][col]){
+                    return true;
+                }
+            }
+        }
+        if(pieces[0][0] == Piece.X){
+            if (pieces[0][0] == pieces[1][1] & pieces[1][1] == pieces[2][2]) {
+                return true;
+            }
+        }else if(pieces[0][0] == Piece.O){
+            if (pieces[0][0] == pieces[1][1] & pieces[1][1] == pieces[2][2]) {
+                return true;
+            }
+        }
+        if(pieces[0][2] == Piece.X){
+            if (pieces[0][2] == pieces[1][1] & pieces[1][1] == pieces[2][0]) {
+                return true;
+            }
+        } else if (pieces[0][2] == Piece.O) {
+            if (pieces[0][2] == pieces[1][1] & pieces[1][1] == pieces[2][0]) {
+                return true;
+            }
+        }
+        return  false;
 
-    }
+    }*/
 
     public boolean isBoardFull() {
         for (int row = 0; row < 3; row++) {
